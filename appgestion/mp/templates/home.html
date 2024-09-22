@@ -1,0 +1,96 @@
+<html>
+<head>
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+  <div id="paymentBrick_container"></div>
+  <script>
+const mp = new MercadoPago('TEST-92662c75-75c9-4902-8c85-06f259111c0e', { locale: 'es-AR' });
+const bricksBuilder = mp.bricks();
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+  const renderPaymentBrick = async (bricksBuilder) => {
+    const settings = {
+      initialization: {
+        amount: 1000,
+        preferenceId: "<PREFERENCE_ID>",
+        payer: {
+          firstName: "",
+          lastName: "",
+          email: "",
+        },
+      },
+      customization: {
+        visual: {
+          style: {
+            theme: "dark",
+          },
+        },
+        paymentMethods: {
+          creditCard: "all",
+          debitCard: "all",
+          ticket: "all",
+          bankTransfer: "all",
+          atm: "all",
+          onboarding_credits: "all",
+          wallet_purchase: "all",
+          maxInstallments: 1
+        },
+      },
+      callbacks: {
+        onReady: () => { },
+        onSubmit: ({ selectedPaymentMethod, formData }) => {
+          return new Promise((resolve, reject) => {
+            fetch("http://127.0.0.1:8000/process_payment/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken  // Incluye el token CSRF en la cabecera
+
+              },
+              body: JSON.stringify(formData),
+            })
+            .then((response) => response.json())
+            .then((response) => {
+              // Imprime la respuesta del servidor en la consola
+              console.log("Respuesta del servidor:", response);
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Error al procesar el pago:", error);
+              reject();
+            });
+          });
+        },
+        onError: (error) => {
+          console.error(error);
+        },
+      },
+    };
+    window.paymentBrickController = await bricksBuilder.create(
+      "payment",
+      "paymentBrick_container",
+      settings
+    );
+  };
+  renderPaymentBrick(bricksBuilder);
+  </script>
+</body>
+</html>

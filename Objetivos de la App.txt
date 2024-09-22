@@ -1,0 +1,27 @@
+Nro central.
+
+Identifica al cliente por su nro de telefono. 
+Muestra últimos negocios a los que se habló.
+
+También muestra negocios de su zona o algunos otros relevantes.
+
+una vez que mediante proceso con bots mediantes (¿incluir IA?) se identifica de qué 
+negocio desea solicitar servicios, se procede a generar turno/compra e incluso enviar 
+links de pago. 
+
+Una vez identificado el negocio, esos mensajes se guardan, porque deberán mostrarse 
+al dueño del negocio para probar la transparencia de la app. 
+
+El dueño del negocio, recibe en su propio Wsp, en el momento que se confirman, las 
+notificaciones de las compras/pedidos e incluso comprobantes de pago. 
+
+Opción al dueño incluso de comunicarse con el cliente en notificaciones o de 
+confirmar/rechazar. 
+
+A fin del día, se envían resúmenes de todo lo hecho por la app a los nros de clientes. 
+
+--
+La app interactúa con los negocios de nros registrados, de manera diferente,
+porque tiene sus nros como admins. Por lo que los mensajes para ellos serán para
+permitir consultar información. 
+

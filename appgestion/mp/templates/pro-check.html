@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Mercado Pago Test</title>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+    <div><img src="" alt=""></div>
+    <div id="wallet_container"></div>
+    <script>
+        // Inicializa el SDK de Mercado Pago con tu clave pública
+        const mp = new MercadoPago('{{ public_key }}', {
+            locale: 'es-AR'  // Asegúrate de usar el locale correcto
+        });
+
+        // Crea el widget de Mercado Pago en el contenedor especificado
+        mp.bricks().create("wallet", "wallet_container", {
+            initialization: {
+                // preferenceId: "1784733023-2ab5022d-2cd8-431f-9dcc-96ae4203cfa0"  // Reemplaza con el ID de preferencia obtenido del backend
+                preferenceId: "{{ preference_id }}"
+
+            },
+            callbacks: {
+                onReady: () => {
+                    console.log("Widget de Mercado Pago cargado exitosamente.");
+                    console.log("el preference id es: {{ preference_id }}")
+                },
+                onError: (error) => {
+                    console.error("Error al cargar el widget de Mercado Pago:", error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
