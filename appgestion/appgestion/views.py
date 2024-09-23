@@ -40,6 +40,9 @@ def show_businesses(response, subcategory):
     response.message(business_message)
     return 'asking_business'
 
+# Diccionario para almacenar el estado de cada usuario
+user_states = {}
+
 def show_services(response, business):
     services = business.services.all()  # Acceder a los servicios del negocio
     service_message = f"Servicios disponibles en *{business.name}*:\n"
@@ -104,9 +107,19 @@ def webhook_twilio(request):
                     selected_subcategory = Subcategory.objects.get(id=subcategory_id)
                     selected_business = Business.objects.filter(subcategory=selected_subcategory)[business_index]
                     user_states[user_number] = show_services(response, selected_business)
+                    user_states[f'{user_number}_business_id'] = selected_business.id  # Guardar el ID del negocio
                 else:
                     response.message("No se ha seleccionado ninguna subcategoría.")
             except (ValueError, IndexError, Subcategory.DoesNotExist):
                 response.message("Por favor, selecciona un negocio válido.")
+        
+        elif user_states[user_number] == 'done':
+            business_id = user_states.get(f'{user_number}_business_id')  # Obtener el ID del negocio seleccionado
+            if business_id:
+                selected_business = Business.objects.get(id=business_id)  # Recuperar el negocio
+                response.message(f"mp/check/{selected_business.name}/")
+            else:
+                response.message("No se ha seleccionado ningún negocio.")
 
         return HttpResponse(str(response), content_type='application/xml')
+
