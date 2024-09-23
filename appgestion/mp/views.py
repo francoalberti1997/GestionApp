@@ -15,9 +15,7 @@ def check_pro_render(request, name=None):
     if name:
 
         business = Business.objects.filter(name=name).first()
-        sdk = mercadopago.SDK(business.access_token)
-
-        
+        sdk = mercadopago.SDK(business.access_token)        
 
         preference_data = {
             "items": [
@@ -41,3 +39,4 @@ def check_pro_render(request, name=None):
 
         return render(request, "pro-check.html", context)
 
+    

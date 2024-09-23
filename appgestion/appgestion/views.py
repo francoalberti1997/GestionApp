@@ -12,3 +12,6 @@ def webhook_twilio(request):
         user_input = request.POST['Body'].strip()  # Respuesta del usuario
 
         response = MessagingResponse()
+        response.message("No se ha seleccionado ningún negocio.")
+
+        return HttpResponse(str(response), content_type='application/xml')
