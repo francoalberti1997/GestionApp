@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User  # Si usas el modelo de usuario de Django
+import secrets
+import string
 
 class Category(models.Model):
     name = models.CharField(max_length=100) 
@@ -34,6 +36,17 @@ class Service(models.Model):  # Corregido el nombre del modelo
     name = models.CharField(max_length=100)
     price = models.FloatField()
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name="services")  # Relación con Business
+    token = models.CharField(max_length=25, null=True, blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = self.generate_token()
+        super().save(*args, **kwargs)  # Llama al método save() del padre
+
+    def generate_token(self):
+        # Define los caracteres que se utilizarán en el token
+        characters = string.ascii_letters + string.digits  # Letras y números
+        return ''.join(secrets.choice(characters) for _ in range(25))  
 
 class Appointment(models.Model):
     PAYMENT_METHODS = [

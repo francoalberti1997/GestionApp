@@ -1,0 +1,13 @@
+Para el cliente: 
+
+	1) SÓLO INTERFAZ DE WSP.
+	2) MÚLTIPLES OPCIONES CERCANAS. 
+	3) INMEDIATEZ EN LA RTA. 
+	4) INFORMACIÓN SOBRE NEGOCIOS BARRIALES.
+	5) PROMOS Y DESCUENTOS.
+
+Para el dueño:
+	1) Herramientas de gestión.
+	2) Automatización de la venta.
+	3) Publicidad Barrial.
+	4) Dashboard fuera de wsp más completo (Opcional)	
