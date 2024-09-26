@@ -23,5 +23,4 @@ urlpatterns = [
     # path('process_payment/', views.process_payment, name='process_payment'),
     path('mp/', include('mp.urls')),
     path('webhook/', views.webhook_twilio)
-
 ]

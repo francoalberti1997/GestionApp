@@ -55,3 +55,8 @@ def check_pro_render(request, token=None):
         # Redirige al usuario directamente al checkout de Mercado Pago
         return redirect(checkout_url)
 
+def webhookMP(request):
+    if request.method == 'POST':
+        print("*")        
+        print(request.POST)
+        print("*")

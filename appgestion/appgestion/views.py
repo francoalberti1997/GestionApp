@@ -123,5 +123,3 @@ def webhook_twilio(request):
         return HttpResponse(str(response), content_type='application/xml')
 
 
-def webhook_mp(request):
-    pass
